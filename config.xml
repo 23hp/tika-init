@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<properties>
+    <parsers>
+        <parser class="org.apache.tika.parser.DefaultParser">
+            <parser-exclude class="org.apache.tika.parser.pdf.PDFParser"/>
+            <parser-exclude class="org.apache.tika.parser.microsoft.ooxml.OOXMLParser"/>
+            <parser-exclude class="org.apache.tika.parser.microsoft.OfficeParser"/>
+            <parser-exclude class="org.apache.tika.parser.ocr.TesseractOCRParser"/>
+        </parser>
+        <parser class="org.apache.tika.parser.pdf.PDFParser">
+            <params>
+                <param name="ocrDPI" type="int">150</param>
+                <param name="ocrStrategy" type="string">auto</param>
+                <param name="ocrStrategyAuto" type="string">5%, 50</param>
+                <param name="extractAnnotationText" type="bool">false</param>
+            </params>
+        </parser>
+        <parser class="org.apache.tika.parser.ocr.TesseractOCRParser">
+            <params>
+                <param name="minFileSizeToOcr" type="long">10000</param>
+                <param name="timeoutSeconds" type="int">120</param>
+            </params>
+        </parser>
+        <parser class="org.apache.tika.parser.microsoft.ooxml.OOXMLParser">
+            <params>
+                <param name="includeDeletedContent" type="bool">true</param>
+                <param name="includeMoveFromContent" type="bool">true</param>
+                <param name="extractMacros" type="bool">true</param>
+            </params>
+        </parser>
+        <parser class="org.apache.tika.parser.microsoft.OfficeParser">
+            <params>
+                <param name="extractMacros" type="bool">true</param>
+            </params>
+        </parser>
+    </parsers>
+    <server>
+        <params>
+            <enableUnsecureFeatures>true</enableUnsecureFeatures>
+            <endpoints>
+                <endpoint>async</endpoint>
+            </endpoints>
+        </params>
+    </server>
+
+    <metadataFilters>
+        <!-- depending on the file format, some dates do not have a timezone. This
+             filter arbitrarily assumes dates have a UTC timezone and will format all
+             dates as yyyy-MM-dd'T'HH:mm:ss'Z' whether or not they actually have a timezone.
+             Note: this needs to come before fields are renamed!
+         -->
+        <metadataFilter class="org.apache.tika.metadata.filter.DateNormalizingMetadataFilter"/>
+        <metadataFilter class="org.apache.tika.langdetect.optimaize.metadatafilter.OptimaizeMetadataFilter">
+            <params>
+                <maxCharsForDetection>10000</maxCharsForDetection>
+            </params>
+        </metadataFilter>
+    </metadataFilters>
+
+    <async>
+        <params>
+            <numClients>2</numClients>
+            <emitWithinMillis>2000</emitWithinMillis>
+            <tikaConfig>/config/config.xml</tikaConfig>
+            <timeoutMillis>120000</timeoutMillis>
+            <forkedJvmArgs>
+                <arg>-Xmx2g</arg>
+                <arg>-XX:ParallelGCThreads=2</arg>
+                <arg>-XX:+ExitOnOutOfMemoryError</arg>
+                <arg>-Dlog4j.configurationFile=/fork-log.xml</arg>
+            </forkedJvmArgs>
+        </params>
+    </async>
+    <fetchers>
+        <fetcher class="org.apache.tika.pipes.fetcher.s3.S3Fetcher">
+            <params>
+                <name>s3f</name>
+                <region>{REGION}</region>
+                <bucket>{BUCKET}</bucket>
+                <credentialsProvider>key_secret</credentialsProvider>
+                <accessKey>{ACCESS_KEY}</accessKey>
+                <secretKey>{SECRET_KEY}</secretKey>
+                <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
+                <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
+                <throttleSeconds>30,120,600,1200</throttleSeconds>
+
+                <!-- extract the s3 object user metadata and inject it into the Tika metadata -->
+                <extractUserMetadata>true</extractUserMetadata>
+            </params>
+        </fetcher>
+    </fetchers>
+    <pipesIterator class="org.apache.tika.pipes.pipesiterator.s3.S3PipesIterator">
+        <emitterName>s3e</emitterName>
+        <fetcherName>s3f</fetcherName>
+        <region>{REGION}</region>
+        <bucket>{BUCKET}</bucket>
+        <credentialsProvider>key_secret</credentialsProvider>
+        <accessKey>{ACCESS_KEY}</accessKey>
+        <secretKey>{SECRET_KEY}</secretKey>
+        <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
+        <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
+    </pipesIterator>
+    <emitters>
+        <emitter class="org.apache.tika.pipes.emitter.s3.S3Emitter">
+            <name>s3e</name>
+            <region>{REGION}</region>
+            <bucket>{BUCKET}</bucket>
+            <credentialsProvider>key_secret</credentialsProvider>
+            <accessKey>{ACCESS_KEY}</accessKey>
+            <secretKey>{SECRET_KEY}</secretKey>
+            <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
+            <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
+        </emitter>
+    </emitters>
+</properties>
