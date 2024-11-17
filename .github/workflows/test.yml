@@ -1,0 +1,27 @@
+on:
+  push:
+    paths-ignore:
+      - '.idea/**'
+      - '**/*.md'
+  release:
+    types: [published]
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Cache Docker images.
+        uses: ScribeMD/docker-cache@0.5.0
+        with:
+          key: ${{ runner.os }}-${{ hashFiles('docker-compose.yml') }}
+      - name: Start test dependency services
+        run: |
+          docker-compose up -d
+          sleep 5
+          docker ps -a
+          docker logs tika-init
+      - name: Run test
+        run: |
+          bash ./test.sh
