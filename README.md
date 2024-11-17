@@ -1,4 +1,4 @@
-# tika-ini
+# tika-initializer
 
 Use for configuring the docker tika server. 
 

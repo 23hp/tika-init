@@ -1,8 +1,12 @@
+name: Run Tests
 on:
   push:
+    branches: [ "main" ]
     paths-ignore:
       - '.idea/**'
-      - '**/*.md'
+      - '*.md'
+  pull_request:
+    branches: [ "main" ]
   release:
     types: [published]
 jobs:
