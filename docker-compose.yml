@@ -3,15 +3,19 @@ x-function: &function
   volumes:
     - tika-config:/config
     - tika-extras:/tika-extras
+x-net: &net
+  networks:
+      - tika-net
 services:
   tika-init:
+    container_name: tika-init
     build:
       context: .
       dockerfile: Dockerfile
     <<: *function
   tika:
     image: apache/tika:latest-full
-    <<: *function
+    <<: [*function , *net]
     command: -c /config/config.xml
     ports:
       - "9998:9998"
@@ -20,7 +24,20 @@ services:
     depends_on:
       tika-init:
         condition: service_completed_successfully
+  s3mock:
+    image: adobe/s3mock:latest
+    hostname: s3
+    <<: *net
+    environment:
+      #      - debug=true
+      - retainFilesOnExit=false
+      - root=uploads
+      - initialBuckets=files,tika-results
+    ports:
+      - "9090:9090" # HTTP
 
 volumes:
   tika-config:
   tika-extras:
+networks:
+  tika-net:

@@ -13,7 +13,7 @@ fi
 
 echo "=== Copying config.xml and fork-log.xml to $CONFIG_PATH"
 cp config.xml fork-log.xml $CONFIG_PATH
-sed -i "s|{REGION}|$REGION|g; s|{BUCKET}|$BUCKET|g; s|{ACCESS_KEY}|$ACCESS_KEY|g; s|{SECRET_KEY}|$SECRET_KEY|g; s|{S3_ENDPOINT}|$S3_ENDPOINT|g;" ${CONFIG_PATH}/config.xml
+sed -i "s|{REGION}|$REGION|g; s|{BUCKET4FETCHER}|$BUCKET4FETCHER|g; s|{BUCKET4EMITTER}|$BUCKET4EMITTER|g; s|{ACCESS_KEY}|$ACCESS_KEY|g; s|{SECRET_KEY}|$SECRET_KEY|g; s|{S3_ENDPOINT}|$S3_ENDPOINT|g;" ${CONFIG_PATH}/config.xml
 echo "=== Files under $CONFIG_PATH"
 ls $CONFIG_PATH
 
@@ -23,7 +23,7 @@ do
     FILEPATH=${JAR_PATH}${FILENAME}
     if [ ! -f "$FILEPATH" ]; then
         echo "=== Downloading ${FILEPATH}"
-        wget -t 10  https://repo1.maven.org/maven2/org/apache/tika/${JAR_NAME}/${TIKA_VERSION}/${FILENAME} -O ${FILEPATH}
+        curl -L -o $FILEPATH https://repo1.maven.org/maven2/org/apache/tika/${JAR_NAME}/${TIKA_VERSION}/${FILENAME}
     fi
 done
 

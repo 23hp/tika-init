@@ -39,6 +39,7 @@
             <enableUnsecureFeatures>true</enableUnsecureFeatures>
             <endpoints>
                 <endpoint>async</endpoint>
+                <endpoint>pipes</endpoint>
             </endpoints>
         </params>
     </server>
@@ -76,7 +77,7 @@
             <params>
                 <name>s3f</name>
                 <region>{REGION}</region>
-                <bucket>{BUCKET}</bucket>
+                <bucket>{BUCKET4FETCHER}</bucket>
                 <credentialsProvider>key_secret</credentialsProvider>
                 <accessKey>{ACCESS_KEY}</accessKey>
                 <secretKey>{SECRET_KEY}</secretKey>
@@ -89,22 +90,11 @@
             </params>
         </fetcher>
     </fetchers>
-    <pipesIterator class="org.apache.tika.pipes.pipesiterator.s3.S3PipesIterator">
-        <emitterName>s3e</emitterName>
-        <fetcherName>s3f</fetcherName>
-        <region>{REGION}</region>
-        <bucket>{BUCKET}</bucket>
-        <credentialsProvider>key_secret</credentialsProvider>
-        <accessKey>{ACCESS_KEY}</accessKey>
-        <secretKey>{SECRET_KEY}</secretKey>
-        <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
-        <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
-    </pipesIterator>
     <emitters>
         <emitter class="org.apache.tika.pipes.emitter.s3.S3Emitter">
             <name>s3e</name>
             <region>{REGION}</region>
-            <bucket>{BUCKET}</bucket>
+            <bucket>{BUCKET4EMITTER}</bucket>
             <credentialsProvider>key_secret</credentialsProvider>
             <accessKey>{ACCESS_KEY}</accessKey>
             <secretKey>{SECRET_KEY}</secretKey>
