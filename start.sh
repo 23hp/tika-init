@@ -17,7 +17,7 @@ sed -i "s|{REGION}|$REGION|g; s|{BUCKET4FETCHER}|$BUCKET4FETCHER|g; s|{BUCKET4EM
 echo "=== Files under $CONFIG_PATH"
 ls $CONFIG_PATH
 
-for JAR_NAME in tika-emitter-s3 tika-fetcher-s3 tika-fetcher-s3
+for JAR_NAME in tika-emitter-s3 tika-fetcher-s3
 do
     FILENAME=${JAR_NAME}-${TIKA_VERSION}.jar
     FILEPATH=${JAR_PATH}${FILENAME}
