@@ -1,7 +1,10 @@
 #!/bin/sh -e
 
-#mkdir $JAR_PATH
-#mkdir $CONFIG_PATH
+# tika extra jar location
+JAR_PATH="/tika-extras/"
+# tika config location
+CONFIG_PATH="/config/"
+
 if [ ! -d "$JAR_PATH" ]; then
   echo "$JAR_PATH is not mount."
   exit 1
@@ -17,6 +20,7 @@ sed -i "s|{REGION}|$REGION|g; s|{BUCKET4FETCHER}|$BUCKET4FETCHER|g; s|{BUCKET4EM
 echo "=== Files under $CONFIG_PATH"
 ls $CONFIG_PATH
 
+# download tika extra jars
 for JAR_NAME in tika-emitter-s3 tika-fetcher-s3
 do
     FILENAME=${JAR_NAME}-${TIKA_VERSION}.jar
