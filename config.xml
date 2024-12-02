@@ -81,7 +81,7 @@
                 <credentialsProvider>key_secret</credentialsProvider>
                 <accessKey>{ACCESS_KEY}</accessKey>
                 <secretKey>{SECRET_KEY}</secretKey>
-                <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
+                <endpointConfigurationService>{S3_ENTRYPOINT}</endpointConfigurationService>
                 <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
                 <throttleSeconds>30,120,600,1200</throttleSeconds>
 
@@ -98,7 +98,7 @@
             <credentialsProvider>key_secret</credentialsProvider>
             <accessKey>{ACCESS_KEY}</accessKey>
             <secretKey>{SECRET_KEY}</secretKey>
-            <endpointConfigurationService>{S3_ENDPOINT}</endpointConfigurationService>
+            <endpointConfigurationService>{S3_ENTRYPOINT}</endpointConfigurationService>
             <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
         </emitter>
     </emitters>
