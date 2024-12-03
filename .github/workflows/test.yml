@@ -22,7 +22,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('docker-compose.yml') }}
       - name: Start test dependency services
         run: |
-          cp .env.example .env
+          cp env.example .env
           docker compose up -d --build --force-recreate
           sleep 5 # wait for services to start
           docker ps -a
