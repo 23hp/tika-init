@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 COPY fork-log.xml config.xml start.sh /
 RUN chmod +x /start.sh
 ENV TIKA_VERSION="3.0.0" \
-    S3_ENDPOINT="http://s3:9090" \
+    S3_ENTRYPOINT="http://s3:9090" \
     BUCKET4FETCHER="files" \
     BUCKET4EMITTER="tika-results" \
     REGION="any" \
