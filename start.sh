@@ -16,7 +16,7 @@ fi
 
 echo "=== Copying config.xml and fork-log.xml to $CONFIG_PATH"
 cp config.xml fork-log.xml $CONFIG_PATH
-sed -i "s|{REGION}|$REGION|g; s|{BUCKET4FETCHER}|$BUCKET4FETCHER|g; s|{BUCKET4EMITTER}|$BUCKET4EMITTER|g; s|{ACCESS_KEY}|$ACCESS_KEY|g; s|{SECRET_KEY}|$SECRET_KEY|g; s|{S3_ENTRYPOINT}|$S3_ENTRYPOINT|g;" ${CONFIG_PATH}/config.xml
+sed -i "s|{REGION}|$REGION|g; s|{SOURCE_BUCKET}|$SOURCE_BUCKET|g; s|{DEST_BUCKET}|$DEST_BUCKET|g; s|{ACCESS_KEY}|$ACCESS_KEY|g; s|{SECRET_KEY}|$SECRET_KEY|g; s|{S3_URL}|$S3_URL|g;" ${CONFIG_PATH}/config.xml
 echo "=== Files under $CONFIG_PATH"
 ls $CONFIG_PATH
 

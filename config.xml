@@ -77,11 +77,11 @@
             <params>
                 <name>s3f</name>
                 <region>{REGION}</region>
-                <bucket>{BUCKET4FETCHER}</bucket>
+                <bucket>{SOURCE_BUCKET}</bucket>
                 <credentialsProvider>key_secret</credentialsProvider>
                 <accessKey>{ACCESS_KEY}</accessKey>
                 <secretKey>{SECRET_KEY}</secretKey>
-                <endpointConfigurationService>{S3_ENTRYPOINT}</endpointConfigurationService>
+                <endpointConfigurationService>{S3_URL}</endpointConfigurationService>
                 <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
                 <throttleSeconds>30,120,600,1200</throttleSeconds>
 
@@ -94,11 +94,11 @@
         <emitter class="org.apache.tika.pipes.emitter.s3.S3Emitter">
             <name>s3e</name>
             <region>{REGION}</region>
-            <bucket>{BUCKET4EMITTER}</bucket>
+            <bucket>{DEST_BUCKET}</bucket>
             <credentialsProvider>key_secret</credentialsProvider>
             <accessKey>{ACCESS_KEY}</accessKey>
             <secretKey>{SECRET_KEY}</secretKey>
-            <endpointConfigurationService>{S3_ENTRYPOINT}</endpointConfigurationService>
+            <endpointConfigurationService>{S3_URL}</endpointConfigurationService>
             <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
         </emitter>
     </emitters>
