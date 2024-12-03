@@ -1,0 +1,11 @@
+.github
+.gitignore
+
+*.md
+.env
+.env*
+.idea
+*.iml
+
+test.sh
+

@@ -22,8 +22,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('docker-compose.yml') }}
       - name: Start test dependency services
         run: |
+          copy .env.example .env
           docker compose up -d --build --force-recreate
-          sleep 7
+          sleep 5 # wait for services to start
           docker ps -a
           docker logs tika-init
       - name: Run test

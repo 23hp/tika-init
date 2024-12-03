@@ -9,6 +9,7 @@ x-net: &net
 services:
   tika-init:
     container_name: tika-init
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile

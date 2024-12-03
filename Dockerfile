@@ -5,11 +5,5 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 COPY fork-log.xml config.xml start.sh /
 RUN chmod +x /start.sh
-ENV TIKA_VERSION="3.0.0" \
-    S3_URL="http://s3:9090" \
-    SOURCE_BUCKET="files" \
-    DEST_BUCKET="tika-results" \
-    REGION="any" \
-    ACCESS_KEY="any" \
-    SECRET_KEY="any"
+
 ENTRYPOINT ["/start.sh"]
