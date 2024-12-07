@@ -1,9 +1,5 @@
 name: tika
-x-function: &function
-  volumes:
-    - tika-config:/config
-    - tika-output:/output
-    - tika-extras:/tika-extras
+
 x-net: &net
   networks:
     - tika-net
@@ -14,16 +10,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    <<: *function
+    volumes:
+      - tika-config:/config
+      - tika-extras:/tika-extras
   tika:
     container_name: tika
     image: apache/tika:latest-full
-    <<: [ *function , *net ]
+    <<: [ *net ]
     command: -c /config/config.xml
     ports:
       - "9998:9998"
     environment:
       - "AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true"
+    volumes:
+      - ./tika-output:/output
+      - tika-config:/config
+      - tika-extras:/tika-extras
     depends_on:
       tika-init:
         condition: service_completed_successfully
@@ -41,7 +43,6 @@ services:
 
 volumes:
   tika-config:
-  tika-output:
   tika-extras:
 networks:
   tika-net:
