@@ -62,7 +62,7 @@
     <async>
         <params>
             <numClients>2</numClients>
-            <emitWithinMillis>1000</emitWithinMillis>
+            <emitWithinMillis>1500</emitWithinMillis>
             <tikaConfig>/config/config.xml</tikaConfig>
             <timeoutMillis>120000</timeoutMillis>
             <forkedJvmArgs>
