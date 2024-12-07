@@ -28,6 +28,6 @@ jobs:
           docker ps -a
           docker logs tika-init
       - name: Run test
-        run: |
-          chown :35002 tika-output
-          bash ./test.sh
+        script:
+          - chown :35002 tika-output
+          - bash ./test.sh
