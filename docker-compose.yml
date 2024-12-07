@@ -24,7 +24,7 @@ services:
       - "9998:9998"
     environment:
       - "AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true"
-    user: root
+    user: 35002:35002
     depends_on:
       tika-init:
         condition: service_completed_successfully
