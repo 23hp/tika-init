@@ -40,6 +40,7 @@
             <endpoints>
                 <endpoint>async</endpoint>
                 <endpoint>pipes</endpoint>
+                <endpoint>rmeta</endpoint>
             </endpoints>
         </params>
     </server>
@@ -53,7 +54,7 @@
         <metadataFilter class="org.apache.tika.metadata.filter.DateNormalizingMetadataFilter"/>
         <metadataFilter class="org.apache.tika.langdetect.optimaize.metadatafilter.OptimaizeMetadataFilter">
             <params>
-                <maxCharsForDetection>10000</maxCharsForDetection>
+                <maxCharsForDetection>3000</maxCharsForDetection>
             </params>
         </metadataFilter>
     </metadataFilters>
@@ -61,7 +62,7 @@
     <async>
         <params>
             <numClients>2</numClients>
-            <emitWithinMillis>2000</emitWithinMillis>
+            <emitWithinMillis>1000</emitWithinMillis>
             <tikaConfig>/config/config.xml</tikaConfig>
             <timeoutMillis>120000</timeoutMillis>
             <forkedJvmArgs>
@@ -77,7 +78,7 @@
             <params>
                 <name>s3f</name>
                 <region>{REGION}</region>
-                <bucket>{SOURCE_BUCKET}</bucket>
+                <bucket>{BUCKET}</bucket>
                 <credentialsProvider>key_secret</credentialsProvider>
                 <accessKey>{ACCESS_KEY}</accessKey>
                 <secretKey>{SECRET_KEY}</secretKey>
@@ -91,15 +92,11 @@
         </fetcher>
     </fetchers>
     <emitters>
-        <emitter class="org.apache.tika.pipes.emitter.s3.S3Emitter">
-            <name>s3e</name>
-            <region>{REGION}</region>
-            <bucket>{DEST_BUCKET}</bucket>
-            <credentialsProvider>key_secret</credentialsProvider>
-            <accessKey>{ACCESS_KEY}</accessKey>
-            <secretKey>{SECRET_KEY}</secretKey>
-            <endpointConfigurationService>{S3_URL}</endpointConfigurationService>
-            <pathStyleAccessEnabled>true</pathStyleAccessEnabled>
+        <emitter class="org.apache.tika.pipes.emitter.fs.FileSystemEmitter">
+            <params>
+                <name>fse</name>
+                <basePath>/output</basePath>
+            </params>
         </emitter>
     </emitters>
 </properties>

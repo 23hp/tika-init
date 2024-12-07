@@ -1,8 +1,9 @@
 name: tika
 x-function: &function
   volumes:
-    - tika-config:/config
-    - tika-extras:/tika-extras
+    - ./tika-config:/config
+    - ./tika-output:/output
+    - ./tika-extras:/tika-extras
 x-net: &net
   networks:
       - tika-net
@@ -34,12 +35,9 @@ services:
       #      - debug=true
       - retainFilesOnExit=false
       - root=uploads
-      - initialBuckets=files,tika-results
+      - initialBuckets=${BUCKET}
     ports:
       - "9090:9090" # HTTP
 
-volumes:
-  tika-config:
-  tika-extras:
 networks:
   tika-net:

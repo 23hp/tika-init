@@ -2,3 +2,10 @@
 
 .idea
 *.iml
+.output/
+/tika-output/*
+!/tika-output/.keep
+/tika-config/*
+!/tika-config/.keep
+/tika-extras/*
+!/tika-extras/.keep

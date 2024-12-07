@@ -6,6 +6,9 @@
 .env*
 .idea
 *.iml
+tika-config/
+tika-output/
+tika-extras/
 
 test.sh
 
