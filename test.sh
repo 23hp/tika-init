@@ -10,12 +10,12 @@ curl  -d '{ "id":"test","fetcher":"s3f", "fetchKey": "README.md", "emitter":"fse
 printf "\n=== Checking results after emitWithinMillis\n"
 sleep 2
 
-if [ ! -f ./tika-output/test.json ]; then
+if [ ! -f tika-output/test.json ]; then
     printf "File not found!\n"
     docker logs tika
     exit 1
 fi
 
-rm ./tika-output/test.json
+rm tika-output/test.json
 
 printf "\n=== Tika works!"
