@@ -29,5 +29,5 @@ jobs:
           docker logs tika-init
       - name: Run test
         run: |
-          chown :35002 /tika-output
+          chown :35002 tika-output
           bash ./test.sh
