@@ -2,7 +2,7 @@ name: tika
 x-function: &function
   volumes:
     - ./tika-config:/config
-    - ./tika-output:/output:Z
+    - ./tika-output:/output
     - ./tika-extras:/tika-extras
 x-net: &net
   networks:
@@ -24,6 +24,7 @@ services:
       - "9998:9998"
     environment:
       - "AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true"
+    user: root
     depends_on:
       tika-init:
         condition: service_completed_successfully
