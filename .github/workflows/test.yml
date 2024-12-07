@@ -29,4 +29,5 @@ jobs:
           docker logs tika-init
       - name: Run test
         run: |
+          sudo chmod -R a+rw tika-output
           bash ./test.sh
